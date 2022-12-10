@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import React, { Component }  from 'react';
 import AllValuations from "./components/TasksList";
 import Clients from "./components/Clients";
 import { Container } from "@mui/material";
