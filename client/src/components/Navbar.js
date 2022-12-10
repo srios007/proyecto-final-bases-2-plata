@@ -21,7 +21,7 @@ export default function ButtonAppBar() {
               <Link to="/home" style={{ textDecoration: "none", color: '#eee',paddingRight: "3rem"}}>
                 AVALUOS
               </Link>
-              <Link to="/home" style={{ textDecoration: "none", color: '#eee'}}>
+              <Link to="/clients" style={{ textDecoration: "none", color: '#eee'}}>
                 CLIENTES
               </Link>
             </Typography>
