@@ -17,15 +17,18 @@ export default function ButtonAppBar() {
       <AppBar position="static" color="transparent">
         <Container>
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
+              <Link to="/home" style={{ textDecoration: "none", color: '#eee',paddingRight: "3rem"}}>
+                AVALUOS
+              </Link>
               <Link to="/home" style={{ textDecoration: "none", color: '#eee'}}>
-                SKHAPE - AVALUOS CATASTRALES
+                CLIENTES
               </Link>
             </Typography>
             <Button
               variant="contained"
               color="primary"
-              onClick={() => navigate("/tasks/new")}
+              onClick={() => navigate("/clients/new")}
             >
               AGREGAR CLIENTE
             </Button>

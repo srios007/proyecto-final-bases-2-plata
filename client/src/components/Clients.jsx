@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const InitialPage = () => {
+const Clients = () => {
  
 
 
@@ -21,4 +21,4 @@ const InitialPage = () => {
     );
 };
 
-export default InitialPage;
+export default Clients;

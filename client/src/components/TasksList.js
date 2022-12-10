@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { Button, Card, CardContent, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+
 // import DeleteModal from "./DeleteModal";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, Typography } from "@mui/material";
 
 const TasksList = () => {
   const [tasks, setTasks] = useState([]);
@@ -56,7 +57,7 @@ const TasksList = () => {
               <Button
                 variant="contained"
                 color="inherit"
-                onClick={() => navigate(`/tasks/${task.id}/edit`)}
+                onClick={() => navigate(`/clients/${task.id}/edit`)}
               >
                 Edit
               </Button>
