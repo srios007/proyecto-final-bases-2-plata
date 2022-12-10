@@ -1,12 +1,13 @@
 import * as React from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
-
-import { useNavigate, Link } from "react-router-dom";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
 export default function ButtonAppBar() {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ export default function ButtonAppBar() {
         <Container>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Link to="/" style={{ textDecoration: "none", color: '#eee'}}>
-                PERN Stack
+              <Link to="/home" style={{ textDecoration: "none", color: '#eee'}}>
+                SKHAPE - AVALUOS CATASTRALES
               </Link>
             </Typography>
             <Button
@@ -26,7 +27,7 @@ export default function ButtonAppBar() {
               color="primary"
               onClick={() => navigate("/tasks/new")}
             >
-              New Task
+              AGREGAR CLIENTE
             </Button>
           </Toolbar>
         </Container>
