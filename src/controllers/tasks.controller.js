@@ -26,7 +26,8 @@ const getAllTasks = async (req, res, next) => {
 
 const getAllClients = async(req,res,next) =>{
   try {
-    const allClients = await pool.query("SELECT * FROM avaluo_schema.persona")
+    // const allClients = await pool.query("SELECT * FROM avaluo_schema.persona")
+    const allClients = await pool.query("SELECT * FROM persona")
     res.json(allClients.rows)
   } catch (error) {
     next(error)
