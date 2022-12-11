@@ -42,7 +42,7 @@ router.get("/clients", getAllClients);
 
 router.get("/entity/:correo_entidad", getEntity);
 
-router.get("/client/:id", getClient);
+router.get("/client/:id_entidad", getClient);
 
 router.put("/client/:id", updateClient);
 
