@@ -35,19 +35,19 @@ const getAllClients = async(req,res,next) =>{
   }
 }
 
-const getTask = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await pool.query("SELECT * FROM task WHERE id = $1", [id]);
+// const getTask = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const result = await pool.query("SELECT * FROM task WHERE id = $1", [id]);
 
-    if (result.rows.length === 0)
-      return res.status(404).json({ message: "Task not found" });
+//     if (result.rows.length === 0)
+//       return res.status(404).json({ message: "Task not found" });
 
-    res.json(result.rows[0]);
-  } catch (error) {
-    next(error);
-  }
-};
+//     res.json(result.rows[0]);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 const updateTask = async (req, res) => {
   try {
@@ -108,8 +108,9 @@ const createClient = async (req, res, next) => {
       "INSERT INTO entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
       [ identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad]
     );
-    console.log(res.json(newEntity.rows[0]));
+    // console.log(res.json(newEntity.rows[0]));
     res.json(newEntity.rows[0]);
+    // await getEntity();
 
     // const newClient = await pool.query(
  
@@ -118,6 +119,39 @@ const createClient = async (req, res, next) => {
     // );
 
     // res.json(newClient.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+  
+
+
+};
+
+
+const getTask = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query("SELECT * FROM task WHERE id = $1", [id]);
+
+    if (result.rows.length === 0)
+      return res.status(404).json({ message: "Task not found" });
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getEntity = async (req, res,next) => {
+  try {
+    const { id_entidad } = req.params;
+ 
+    const result = await pool.query("SELECT * FROM entidad WHERE id_entidad = $1", [id_entidad]);
+
+    if (result.rows.length === 0)
+      return res.status(404).json({ message: "Entidad not found" });
+ 
+    res.json(result.rows[0]);
   } catch (error) {
     next(error);
   }
@@ -131,4 +165,5 @@ module.exports = {
   deleteTask,
   getAllClients,
   createClient,
+  getEntity,
 };

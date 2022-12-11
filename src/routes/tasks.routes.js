@@ -7,6 +7,7 @@ const {
   deleteTask,
   getAllClients,
   createClient,
+  getEntity
 } = require("../controllers/tasks.controller");
 const router = Router();
 // const pool = require('../db');
@@ -24,11 +25,15 @@ router.get("/tasks", getAllTasks);
 
 router.get("/tasks/:id", getTask);
 
+
 router.put("/tasks/:id", updateTask);
 
 router.delete("/tasks/:id", deleteTask);
- 
+
 router.post("/createClient", createClient);
 
 router.get("/clients", getAllClients);
+
+router.get("/entity/:id_entidad", getEntity);
+
 module.exports = router;

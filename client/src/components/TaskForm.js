@@ -14,6 +14,7 @@ const TaskForm = () => {
 
 
   const [client, setClient] = useState({
+    id_entidad: "",
     identificacion_entidad: "",
     tipo_identificacion: "",
     telefono_entidad: "",
@@ -77,12 +78,9 @@ const TaskForm = () => {
       if (editing) {
 
       } else {
-        console.log('-------1-------');
         client.telefono_entidad = parseInt(client.telefono_entidad);
-        console.log('-------2-------');
 
         console.log(JSON.stringify(client));
-        console.log('-------3-------');
 
         const response = await fetch("http://localhost:4000/createClient", {
           method: "POST",
@@ -90,12 +88,19 @@ const TaskForm = () => {
           body: JSON.stringify(client),
         });
         await response.json();
+
+        const response2 = await fetch("http://localhost:4000/entity/"+client.correo_entidad);
+        const data2 = await response2.json();
+        console.log(data2);
+        // comentar esto en caso de daño
+        setClient(data2);
       }
 
       setLoading(false);
       navigate("/clients");
     } catch (error) {
       console.error(error);
+      
     }
   };
 
@@ -112,6 +117,7 @@ const TaskForm = () => {
       direction="column"
       justifyContent="center"
     >
+        <h1>{client.id_entidad}</h1>
       <Grid item xs={3}>
         <Card
           sx={{ mt: 5 }}
@@ -125,6 +131,7 @@ const TaskForm = () => {
           </Typography>
           <CardContent>
             <form onSubmit={handleSubmitClient}>
+            
            
               <TextField
               placeholder="Tipo de identificación"
