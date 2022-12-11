@@ -31,7 +31,7 @@ const TasksList = () => {
 
   return (
     <>
-      <h1>Tasks</h1>
+      <h1>Avaluos</h1>
       {tasks.map((task) => (
         <Card
           style={{
@@ -50,25 +50,16 @@ const TasksList = () => {
                 color: "white",
               }}
             >
-              <Typography>{task.title}</Typography>
-              <Typography>{task.description}</Typography>
+              <Typography>{"Avaluo: "+task.id_avaluo}</Typography>
+              {/* <Typography>{task.id_entidad}</Typography> */}
+              <Typography>{"Número de radicado: "+task.num_radicado}</Typography>
+              <Typography>{"Fecha de solicitud: "+task.fecha_solicitud_avaluo}</Typography>
+              <Typography>{"Fecha de expedición: "+task.fecha_expedicion_avaluo}</Typography>
+              <Typography>{"Costo: "+task.costo_avaluo}</Typography>
+              <Typography>{"Proposito: "+task.proposito_avaluo}</Typography>
             </div>
             <div>
-              <Button
-                variant="contained"
-                color="inherit"
-                onClick={() => navigate(`/clients/${task.id}/edit`)}
-              >
-                Edit
-              </Button>
-              <Button
-                variant="contained"
-                color="warning"
-                onClick={() => handleDelete(task.id)}
-                style={{ marginLeft: ".5rem" }}
-              >
-                Delete
-              </Button>
+              
             </div>
           </CardContent>
         </Card>
