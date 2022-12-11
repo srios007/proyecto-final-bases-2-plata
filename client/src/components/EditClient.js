@@ -97,7 +97,7 @@ const EditClient = () => {
           }}
         >
           <Typography variant="h5" textAlign="center" color="white">
-            {editing ? "Update Task" : "Crear cliente"}
+            {editing ? "Editar Empresa" : "Crear cliente"}
           </Typography>
           <CardContent>
             <form onSubmit={handleSubmitClient}>
