@@ -27,7 +27,7 @@ const getAllTasks = async (req, res, next) => {
 
 const getAllClients = async(req,res,next) =>{
   try {
-    const allClients = await pool.query("SELECT * FROM avaluo_schema.persona")
+    const allClients = await pool.query("SELECT * FROM avaluo_schema.empresa")
     // const allClients = await pool.query("SELECT * FROM persona")
     res.json(allClients.rows)
   } catch (error) {
@@ -120,12 +120,12 @@ const createEntity = async (req, res, next) => {
 };
 const createClient = async (req, res, next) => {
   try {
-    const { id_entidad, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento} = req.body;
+    const { id_entidad, camara_comercio, nombre_empresa, razon_social} = req.body;
 
     const newEntity = await pool.query(
-      "INSERT INTO avaluo_schema.PERSONA (id_entidad, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-      //"INSERT INTO PERSONA (id_entidad, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-      [id_entidad, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento]
+      "INSERT INTO avaluo_schema.EMPRESA (id_entidad, camara_comercio, nombre_empresa, razon_social) VALUES ($1, $2, $3, $4) RETURNING *",
+      //"INSERT INTO EMPRESA (id_entidad, camara_comercio, nombre_empresa, razon_social) VALUES ($1, $2, $3, $4) RETURNING *",
+      [id_entidad, camara_comercio, nombre_empresa, razon_social]
     );
     // console.log(res.json(newEntity.rows[0]));
     res.json(newEntity.rows[0]);

@@ -9,6 +9,9 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ComboBox } from 'react-widgets/Combobox';
+import Select from 'react-select';
+
 
 const TaskForm = () => {
 
@@ -16,7 +19,7 @@ const TaskForm = () => {
   const [entity, setEntity] = useState({
     id_entidad: "",
     identificacion_entidad: "",
-    tipo_identificacion: "",
+    tipo_identificacion: "NIT",
     telefono_entidad: "",
     correo_entidad: "",
 
@@ -24,11 +27,9 @@ const TaskForm = () => {
   //crea los clientes
   const [client, setClient] = useState({
     id_entidad: "",
-    primer_nombre: "",
-    segundo_nombre: "",
-    primer_apellido: "",
-    segundo_apellido: "",
-    fecha_nacimiento: "",
+    camara_comercio: "",
+    nombre_empresa: "",
+    razon_social: "",
 
   });
 
@@ -107,10 +108,11 @@ const TaskForm = () => {
 
         // comentar esto en caso de daño
         setEntity(data2);
-        client.id_entidad = entity.id_entidad;
+        client.id_entidad = data2.id_entidad;
         setClient(client);
         // client.fecha_nacimiento = Date(client.fecha_nacimiento);
-        console.log(client)
+        console.log(client);
+        console.log("first");
         const response3 = await fetch("http://localhost:4000/createClient", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -121,19 +123,30 @@ const TaskForm = () => {
       }
 
       setLoading(false);
-      // navigate("/clients");
+      navigate("/clients");
     } catch (error) {
       console.error(error);
 
     }
   };
-
   const handleChange = (e) => {
     console.log(e.target.name);
     console.log(e.target.value);
     setEntity({ ...entity, [e.target.name]: e.target.value });
     setClient({ ...client, [e.target.name]: e.target.value });
   };
+  const handleSelect = (e) => {
+    console.log(e);
+    console.log(e.label);
+    entity.tipo_identificacion = e.label;
+    setEntity(entity);
+  };
+  const options = [
+    { value: 'CC', label: 'CC' },
+    { value: 'NIT', label: 'NIT' },
+    { value: 'PAP', label: 'PAP' },
+    { value: 'CE', label: 'CE' }
+  ]
 
   return (
     <Grid
@@ -142,7 +155,6 @@ const TaskForm = () => {
       direction="column"
       justifyContent="center"
     >
-      <h1>{entity.id_entidad}</h1>
       <Grid item xs={3}>
         <Card
           sx={{ mt: 5 }}
@@ -156,9 +168,44 @@ const TaskForm = () => {
           </Typography>
           <CardContent>
             <form onSubmit={handleSubmitClient}>
+              
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                defaultValue={options[1]}
+                isDisabled={false}
+                isLoading={false}
+                isClearable={false}
+                isRtl={false}
+                isSearchable={true}
+                name="color"
+                options={options}
+                onChange={handleSelect}
+              />
+              
+              
+              {/* <Select options={options} 
+               defaultValue={options[1]}
+               placeholder="tipo de identificación"
+               name="tipo_identificacion"
+               onChange={handleSelect}
+               value={entity.tipo_identificacion}
+               inputProps={{ style: { color: "white" } }}
+               InputLabelProps={{ style: { color: "white" } }}
+              
+              /> */}
+                
 
-
-              <TextField
+              {/* <ComboBox
+                defaultValue="NIT"
+                data={["CC", "CE", "PAP", "NIT"]}
+                name="tipo_identificacion"
+                onChange={handleChange}
+                value={entity.tipo_identificacion}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />; */}
+              {/* <TextField
                 placeholder="Tipo de identificación"
                 variant="filled"
                 label=""
@@ -171,7 +218,7 @@ const TaskForm = () => {
                 value={entity.tipo_identificacion}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-              />
+              /> */}
               {/* <TextField
                 variant="outlined"
                 label=""
@@ -233,86 +280,56 @@ const TaskForm = () => {
               />
 
               <TextField
-                placeholder='primer nombre'
+                placeholder='Cámara de comercio'
                 variant="filled"
                 // label=""
                 sx={{
                   display: "block",
                   margin: ".5rem 0",
                 }}
-                name="primer_nombre"
+                name="camara_comercio"
                 onChange={handleChange}
-                value={client.primer_nombre}
+                value={client.camara_comercio}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               />
 
               <TextField
-                placeholder='Segundo nombre'
+                placeholder='Nombre de  la empresa'
                 variant="filled"
                 // label=""
                 sx={{
                   display: "block",
                   margin: ".5rem 0",
                 }}
-                name="segundo_nombre"
+                name="nombre_empresa"
                 onChange={handleChange}
-                value={client.segundo_nombre}
+                value={client.nombre_empresa}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               />
 
               <TextField
-                placeholder='Primer apellido'
+                placeholder='Razón social'
                 variant="filled"
                 // label=""
                 sx={{
                   display: "block",
                   margin: ".5rem 0",
                 }}
-                name="primer_apellido"
+                name="razon_social"
                 onChange={handleChange}
-                value={client.primer_apellido}
+                value={client.razon_social}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               />
 
-
-              <TextField
-                placeholder='Segundo apellido'
-                variant="filled"
-                // label=""
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="segundo_apellido"
-                onChange={handleChange}
-                value={client.segundo_apellido}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
-
-              <TextField
-                placeholder='Fecha de nacimiento'
-                variant="filled"
-                // label=""
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="fecha_nacimiento"
-                onChange={handleChange}
-                value={client.fecha_nacimiento}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
-              />
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
-                disabled={!entity.identificacion_entidad || !entity.tipo_identificacion || !entity.telefono_entidad || !entity.correo_entidad || !client.primer_apellido || 
-                !client.segundo_nombre || !client.primer_apellido || !client.segundo_apellido || !client.fecha_nacimiento }
+                disabled={!entity.identificacion_entidad || !entity.tipo_identificacion || !entity.telefono_entidad || !entity.correo_entidad || !client.camara_comercio || 
+                !client.nombre_empresa || !client.razon_social }
 
               >
                 {loading ? (

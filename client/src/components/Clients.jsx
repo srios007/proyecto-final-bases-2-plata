@@ -46,11 +46,11 @@ const Clients = () => {
                                 }}
                             >
                                 {/* <Typography>{+clients.id_entidad}</Typography> */}
-                                <Typography>{"Nombres: " + clients.primer_nombre + " " + clients.segundo_nombre}</Typography>
+                                <Typography>{"Cámara de comercio: " + clients.camara_comercio}</Typography>
                                 {/* <Typography>{clients.segundo_nombre}</Typography> */}
-                                <Typography>{"Apellidos: " + clients.primer_apellido + " " + clients.segundo_apellido}</Typography>
+                                <Typography>{"Nombre: " + clients.nombre_empresa}</Typography>
                                 {/* <Typography>{clients.segundo_apellido}</Typography> */}
-                                <Typography>{"Fecha de nacimiento: " + clients.fecha_nacimiento}</Typography>
+                                <Typography>{"Razón social: " + clients.razon_social}</Typography>
                             </div>
                             <div>
                                 <Button
