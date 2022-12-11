@@ -17,12 +17,21 @@ const createTask = async (req, res, next) => {
 
 const getAllTasks = async (req, res, next) => {
   try {
-    const allTasks = await pool.query("SELECT * FROM task");
+    const allTasks = await pool.query("SELECT * FROM avaluo_schema.task");
     res.json(allTasks.rows);
   } catch (error) {
     next(error);
   }
 };
+
+const getAllClients = async(req,res,next) =>{
+  try {
+    const allClients = await pool.query("SELECT * FROM avaluo_schema.persona")
+    res.json(allClients.rows)
+  } catch (error) {
+    next(error)
+  }
+}
 
 const getTask = async (req, res) => {
   try {
@@ -76,4 +85,5 @@ module.exports = {
   getTask,
   updateTask,
   deleteTask,
+  getAllClients,
 };

@@ -5,6 +5,7 @@ const {
   getTask,
   updateTask,
   deleteTask,
+  getAllClients,
 } = require("../controllers/tasks.controller");
 const router = Router();
 // const pool = require('../db');
@@ -26,4 +27,5 @@ router.put("/tasks/:id", updateTask);
 
 router.delete("/tasks/:id", deleteTask);
 
+router.get("/clients", getAllClients);
 module.exports = router;

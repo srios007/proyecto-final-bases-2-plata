@@ -2,86 +2,73 @@ import {
     Button,
     Card,
     CardContent,
-    CircularProgress,
-    Grid,
-    TextField,
     Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Clients = () => {
-
-    const [tasks, setTasks] = useState([]);
+    const [clients, setClient] = useState([]);
     const navigate = useNavigate();
   
-    const loadTasks = async () => {
-      const response = await fetch("http://localhost:4000/tasks");
+    const loadClient = async () => {
+      const response = await fetch("http://localhost:4000/clients");
       const data = await response.json();
-      setTasks(data);
-    };
-  
-    const handleDelete = async (id) => {
-      try {
-        await fetch(`http://localhost:4000/tasks/${id}`, {
-          method: "DELETE",
-        });
-        setTasks(tasks.filter((task) => task.id !== id));
-      } catch (error) {
-        console.error(error);
-      }
+      console.log(data)
+      // comentar esto en caso de daño
+       setClient(data);
     };
   
     useEffect(() => {
-      loadTasks();
+      loadClient();
     }, []);
   
     return (
       <>
-        <h1>Tasks</h1>
-        {tasks.map((task) => (
-          <Card
-            style={{
-              marginBottom: ".7rem",
-              backgroundColor: "#1e272e",
-            }}
-          >
-            <CardContent
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <div
+        <h1>Clientes</h1>
+        {
+            clients.map((clients) => (
+            <Card
                 style={{
-                  color: "white",
+                marginBottom: ".7rem",
+                backgroundColor: "#1e272e",
                 }}
-              >
-                <Typography>{task.title}</Typography>
-                <Typography>{task.description}</Typography>
-              </div>
-              <div>
-                <Button
-                  variant="contained"
-                  color="inherit"
-                  onClick={() => navigate(`/clients/${task.id}/edit`)}
+            >
+                <CardContent
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                }}
                 >
-                  Edit
-                </Button>
-                <Button
-                  variant="contained"
-                  color="warning"
-                  onClick={() => handleDelete(task.id)}
-                  style={{ marginLeft: ".5rem" }}
+                <div
+                    style={{
+                    color: "white",
+                    }}
                 >
-                  Delete
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                    {/* <Typography>{+clients.id_entidad}</Typography> */}
+                    <Typography>{"Nombres: "+clients.primer_nombre +" "+ clients.segundo_nombre }</Typography>
+                    {/* <Typography>{clients.segundo_nombre}</Typography> */}
+                    <Typography>{"Apellidos: "+clients.primer_apellido+" "+clients.segundo_apellido}</Typography>
+                    {/* <Typography>{clients.segundo_apellido}</Typography> */}
+                    <Typography>{"Fecha de nacimiento: "+clients.fecha_nacimiento}</Typography>
+                </div>
+                <div>
+                    <Button
+                    variant="contained"
+                    color="inherit"
+                    onClick={() => navigate(`/clients/${clients.id}/edit`)}
+                    >
+                    Editar
+                    </Button>
+                </div>
+                </CardContent>
+            </Card>
+            ))
+        }
       </>
     );
   };
+  
+  export default Clients;
+  
 
-export default Clients;
