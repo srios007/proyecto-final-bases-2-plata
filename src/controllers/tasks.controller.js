@@ -17,7 +17,8 @@ const pool = require("../db");
 
 const getAllTasks = async (req, res, next) => {
   try {
-    const allTasks = await pool.query("SELECT * FROM avaluo_schema.task");
+    // const allTasks = await pool.query("SELECT * FROM avaluo_schema.task");
+    const allTasks = await pool.query("SELECT * FROM task");
     res.json(allTasks.rows);
   } catch (error) {
     next(error);
@@ -84,6 +85,8 @@ const createTask = async (req, res, next) => {
     const { title, description } = req.body;
 
     const newTask = await pool.query(
+      
+      // "INSERT INTO avaluo_schema.task (title, description) VALUES($1, $2) RETURNING *",
       "INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
       [title, description]
     );
@@ -101,9 +104,11 @@ const createClient = async (req, res, next) => {
     const { identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad } = req.body;
 
     const newEntity = await pool.query(
+      // "INSERT INTO avaluo_schema.entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
       "INSERT INTO entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
       [ identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad]
     );
+    console.log(res.json(newEntity.rows[0]));
     res.json(newEntity.rows[0]);
 
     // const newClient = await pool.query(
