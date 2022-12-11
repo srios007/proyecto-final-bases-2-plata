@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import logo from "./Skaphe-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
@@ -17,7 +17,7 @@ export default function ButtonAppBar() {
       <AppBar position="static" color="transparent">
         <Container>
           <Toolbar>
-            <img src="https://github.com/srios007/proyecto-final-bases-2-plata/blob/add_client/client/src/components/Skaphe-logo.png" style={{marginRight: "1rem"}}/>
+            <img src={logo} style={{width:"80px",marginRight: "1rem"}}/>
             <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
               <Link to="/home" style={{ textDecoration: "none", color: '#eee',paddingRight: "3rem"}}>
                 AVALUOS
