@@ -1,19 +1,19 @@
 const pool = require("../db");
 
-const createTask = async (req, res, next) => {
-  try {
-    const { title, description } = req.body;
+// const createTask = async (req, res, next) => {
+//   try {
+//     const { title, description } = req.body;
 
-    const newTask = await pool.query(
-      "INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
-      [title, description]
-    );
+//     const newTask = await pool.query(
+//       "INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
+//       [title, description]
+//     );
 
-    res.json(newTask.rows[0]);
-  } catch (error) {
-    next(error);
-  }
-};
+//     res.json(newTask.rows[0]);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 const getAllTasks = async (req, res, next) => {
   try {
@@ -69,6 +69,44 @@ const deleteTask = async (req, res) => {
     next(error);
   }
 };
+const createTask = async (req, res, next) => {
+  try {
+    const { title, description } = req.body;
+
+    const newTask = await pool.query(
+      "INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
+      [title, description]
+    );
+
+    res.json(newTask.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+const createClient = async (req, res, next) => {
+  try {
+    const { identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad } = req.body;
+
+    const newEntity = await pool.query(
+      "INSERT INTO entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
+      [ identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad]
+    );
+    res.json(newEntity.rows[0]);
+
+    // const newClient = await pool.query(
+ 
+    //   "INSERT INTO PERSONA (id_entidad, name, secondname, lastName, secondLastname, date) VALUES (${}, $2, $3, $4, $5, $6);",
+    //   [id, name, secondname, lastName, secondLastname, date]
+    // );
+
+    // res.json(newClient.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   createTask,
@@ -76,4 +114,5 @@ module.exports = {
   getTask,
   updateTask,
   deleteTask,
+  createClient,
 };
