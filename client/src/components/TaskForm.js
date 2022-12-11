@@ -12,8 +12,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const TaskForm = () => {
 
-
-  const [client, setClient] = useState({
+  // crea las entidades
+  const [entity, setEntity] = useState({
     id_entidad: "",
     identificacion_entidad: "",
     tipo_identificacion: "",
@@ -21,6 +21,17 @@ const TaskForm = () => {
     correo_entidad: "",
 
   });
+  //crea los clientes
+  const [client, setClient] = useState({
+    id_entidad: "",
+    primer_nombre: "",
+    segundo_nombre: "",
+    primer_apellido: "",
+    segundo_apellido: "",
+    fecha_nacimiento: "",
+
+  });
+
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
 
@@ -79,39 +90,51 @@ const TaskForm = () => {
       if (editing) {
 
       } else {
-        client.telefono_entidad = parseInt(client.telefono_entidad);
+        entity.telefono_entidad = parseInt(entity.telefono_entidad);
 
-        console.log(JSON.stringify(client));
+        console.log(JSON.stringify(entity));
 
-        const response = await fetch("http://localhost:4000/createClient", {
+        const response = await fetch("http://localhost:4000/createEntity", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(entity),
+        });
+        await response.json();
+
+        const response2 = await fetch("http://localhost:4000/entity/" + entity.correo_entidad);
+        const data2 = await response2.json();
+        console.log(data2);
+
+        // comentar esto en caso de daño
+        setEntity(data2);
+        client.id_entidad = entity.id_entidad;
+        setClient(client);
+        // client.fecha_nacimiento = Date(client.fecha_nacimiento);
+        console.log(client)
+        const response3 = await fetch("http://localhost:4000/createClient", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(client),
         });
-        await response.json();
-        
-        const response2 = await fetch("http://localhost:4000/entity/"+client.correo_entidad);
-        const data2 = await response2.json();
-        console.log(data2);
-        
-        // comentar esto en caso de daño
-        setClient(data2);
+        await response3.json();
+
       }
 
       setLoading(false);
       // navigate("/clients");
     } catch (error) {
       console.error(error);
-      
+
     }
   };
 
-  const handleChange = (e) =>{   
+  const handleChange = (e) => {
     console.log(e.target.name);
     console.log(e.target.value);
-    setClient({ ...client, [e.target.name] : e.target.value });
+    setEntity({ ...entity, [e.target.name]: e.target.value });
+    setClient({ ...client, [e.target.name]: e.target.value });
   };
- 
+
   return (
     <Grid
       container
@@ -119,7 +142,7 @@ const TaskForm = () => {
       direction="column"
       justifyContent="center"
     >
-        <h1>{client.id_entidad}</h1>
+      <h1>{entity.id_entidad}</h1>
       <Grid item xs={3}>
         <Card
           sx={{ mt: 5 }}
@@ -133,10 +156,10 @@ const TaskForm = () => {
           </Typography>
           <CardContent>
             <form onSubmit={handleSubmitClient}>
-            
-           
+
+
               <TextField
-              placeholder="Tipo de identificación"
+                placeholder="Tipo de identificación"
                 variant="filled"
                 label=""
                 sx={{
@@ -145,7 +168,7 @@ const TaskForm = () => {
                 }}
                 name="tipo_identificacion"
                 onChange={handleChange}
-                value={client.tipo_identificacion}
+                value={entity.tipo_identificacion}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               />
@@ -164,9 +187,9 @@ const TaskForm = () => {
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               /> */}
-              
+
               <TextField
-              placeholder="Número de identificación"
+                placeholder="Número de identificación"
                 variant="filled"
                 label=""
                 sx={{
@@ -175,12 +198,12 @@ const TaskForm = () => {
                 }}
                 name="identificacion_entidad"
                 onChange={handleChange}
-                value={client.identificacion_entidad}
+                value={entity.identificacion_entidad}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               />
               <TextField
-              placeholder="Teléfono"
+                placeholder="Teléfono"
                 variant="filled"
                 label=""
                 sx={{
@@ -189,13 +212,13 @@ const TaskForm = () => {
                 }}
                 name="telefono_entidad"
                 onChange={handleChange}
-                value={client.telefono_entidad}
+                value={entity.telefono_entidad}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               />
-          
+
               <TextField
-              placeholder= 'Correo'
+                placeholder='Correo'
                 variant="filled"
                 // label=""
                 sx={{
@@ -204,7 +227,83 @@ const TaskForm = () => {
                 }}
                 name="correo_entidad"
                 onChange={handleChange}
-                value={client.correo_entidad}
+                value={entity.correo_entidad}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+
+              <TextField
+                placeholder='primer nombre'
+                variant="filled"
+                // label=""
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="primer_nombre"
+                onChange={handleChange}
+                value={client.primer_nombre}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+
+              <TextField
+                placeholder='Segundo nombre'
+                variant="filled"
+                // label=""
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="segundo_nombre"
+                onChange={handleChange}
+                value={client.segundo_nombre}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+
+              <TextField
+                placeholder='Primer apellido'
+                variant="filled"
+                // label=""
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="primer_apellido"
+                onChange={handleChange}
+                value={client.primer_apellido}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+
+
+              <TextField
+                placeholder='Segundo apellido'
+                variant="filled"
+                // label=""
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="segundo_apellido"
+                onChange={handleChange}
+                value={client.segundo_apellido}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+
+              <TextField
+                placeholder='Fecha de nacimiento'
+                variant="filled"
+                // label=""
+                sx={{
+                  display: "block",
+                  margin: ".5rem 0",
+                }}
+                name="fecha_nacimiento"
+                onChange={handleChange}
+                value={client.fecha_nacimiento}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
               />
@@ -212,7 +311,8 @@ const TaskForm = () => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                disabled={!client.identificacion_entidad || !client.tipo_identificacion || !client.telefono_entidad || !client.correo_entidad}
+                disabled={!entity.identificacion_entidad || !entity.tipo_identificacion || !entity.telefono_entidad || !entity.correo_entidad || !client.primer_apellido || 
+                !client.segundo_nombre || !client.primer_apellido || !client.segundo_apellido || !client.fecha_nacimiento }
 
               >
                 {loading ? (

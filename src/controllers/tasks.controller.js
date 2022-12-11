@@ -99,7 +99,7 @@ const createTask = async (req, res, next) => {
 
 
 
-const createClient = async (req, res, next) => {
+const createEntity = async (req, res, next) => {
   try {
     const { identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad } = req.body;
 
@@ -108,22 +108,31 @@ const createClient = async (req, res, next) => {
       //"INSERT INTO entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
       [ identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad]
     );
-    // console.log(res.json(newEntity.rows[0]));
+
     res.json(newEntity.rows[0]);
-    // await getEntity();
 
-    // const newClient = await pool.query(
- 
-    //   "INSERT INTO PERSONA (id_entidad, name, secondname, lastName, secondLastname, date) VALUES (${}, $2, $3, $4, $5, $6);",
-    //   [id, name, secondname, lastName, secondLastname, date]
-    // );
-
-    // res.json(newClient.rows[0]);
   } catch (error) {
     next(error);
   }
   
 
+
+};
+const createClient = async (req, res, next) => {
+  try {
+    const { id_entidad, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento} = req.body;
+
+    const newEntity = await pool.query(
+      "INSERT INTO avaluo_schema.PERSONA (id_entidad, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      //"INSERT INTO PERSONA (id_entidad, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [id_entidad, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento]
+    );
+    // console.log(res.json(newEntity.rows[0]));
+    res.json(newEntity.rows[0]);
+
+  } catch (error) {
+    next(error);
+  }
 
 };
 
@@ -165,5 +174,6 @@ module.exports = {
   deleteTask,
   getAllClients,
   createClient,
+  createEntity,
   getEntity,
 };
