@@ -17,7 +17,7 @@ const pool = require("../db");
 
 const getAllTasks = async (req, res, next) => {
   try {
-    const allTasks = await pool.query("SELECT * FROM avaluo_schema.task");
+    const allTasks = await pool.query("SELECT * FROM avaluo_schema.avaluo");
     // const allTasks = await pool.query("SELECT * FROM task");
     res.json(allTasks.rows);
   } catch (error) {
