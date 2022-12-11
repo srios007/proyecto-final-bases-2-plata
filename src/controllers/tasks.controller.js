@@ -17,18 +17,18 @@ const pool = require("../db");
 
 const getAllTasks = async (req, res, next) => {
   try {
-    const allTasks = await pool.query("SELECT * FROM avaluo_schema.avaluo");
-    // const allTasks = await pool.query("SELECT * FROM task");
+    // const allTasks = await pool.query("SELECT * FROM avaluo_schema.task");
+    const allTasks = await pool.query("SELECT * FROM task");
     res.json(allTasks.rows);
   } catch (error) {
     next(error);
   }
 };
 
-const getAllClients = async(req,res,next) =>{
+const getAllClients = async (req, res, next) => {
   try {
-    const allClients = await pool.query("SELECT * FROM avaluo_schema.empresa")
-    // const allClients = await pool.query("SELECT * FROM persona")
+    // const allClients = await pool.query("SELECT * FROM avaluo_schema.empresa")
+    const allClients = await pool.query("SELECT * FROM empresa")
     res.json(allClients.rows)
   } catch (error) {
     next(error)
@@ -68,6 +68,27 @@ const updateTask = async (req, res) => {
   }
 };
 
+const updateClient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { id_entidad, camara_comercio, nombre_empresa, razon_social } = req.body;
+
+    const result = await pool.query(
+      "UPDATE client SET id_entidad = $1, camara_comercio = $2, nombre_empresa = $3, razon_social = $4 WHERE id = $5 RETURNING *",
+      [id_entidad, camara_comercio, nombre_empresa, razon_social, id]
+    );
+  
+
+    if (result.rows.length === 0)
+      return res.status(404).json({ message: "Client not found" });
+
+    return res.json(result.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
@@ -85,9 +106,9 @@ const createTask = async (req, res, next) => {
     const { title, description } = req.body;
 
     const newTask = await pool.query(
-      
-      "INSERT INTO avaluo_schema.task (title, description) VALUES($1, $2) RETURNING *",
-      //"INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
+
+      // "INSERT INTO avaluo_schema.task (title, description) VALUES($1, $2) RETURNING *",
+      "INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
       [title, description]
     );
 
@@ -104,9 +125,9 @@ const createEntity = async (req, res, next) => {
     const { identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad } = req.body;
 
     const newEntity = await pool.query(
-       "INSERT INTO avaluo_schema.entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
-      //"INSERT INTO entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
-      [ identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad]
+      //  "INSERT INTO avaluo_schema.entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
+      "INSERT INTO entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
+      [identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad]
     );
 
     res.json(newEntity.rows[0]);
@@ -114,17 +135,17 @@ const createEntity = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-  
+
 
 
 };
 const createClient = async (req, res, next) => {
   try {
-    const { id_entidad, camara_comercio, nombre_empresa, razon_social} = req.body;
+    const { id_entidad, camara_comercio, nombre_empresa, razon_social } = req.body;
 
     const newEntity = await pool.query(
-      "INSERT INTO avaluo_schema.EMPRESA (id_entidad, camara_comercio, nombre_empresa, razon_social) VALUES ($1, $2, $3, $4) RETURNING *",
-      //"INSERT INTO EMPRESA (id_entidad, camara_comercio, nombre_empresa, razon_social) VALUES ($1, $2, $3, $4) RETURNING *",
+      // "INSERT INTO avaluo_schema.EMPRESA (id_entidad, camara_comercio, nombre_empresa, razon_social) VALUES ($1, $2, $3, $4) RETURNING *",
+      "INSERT INTO EMPRESA (id_entidad, camara_comercio, nombre_empresa, razon_social) VALUES ($1, $2, $3, $4) RETURNING *",
       [id_entidad, camara_comercio, nombre_empresa, razon_social]
     );
     // console.log(res.json(newEntity.rows[0]));
@@ -151,15 +172,30 @@ const getTask = async (req, res, next) => {
   }
 };
 
-const getEntity = async (req, res,next) => {
+const getEntity = async (req, res, next) => {
   try {
     const { correo_entidad } = req.params;
-    const result = await pool.query("SELECT * FROM avaluo_schema.entidad WHERE correo_entidad = $1", [correo_entidad]);
-    // const result = await pool.query("SELECT * FROM entidad WHERE id_entidad = $1", [id_entidad]);
+    // const result = await pool.query("SELECT * FROM avaluo_schema.entidad WHERE correo_entidad = $1", [correo_entidad]);
+    const result = await pool.query("SELECT * FROM entidad WHERE correo_entidad = $1", [correo_entidad]);
 
     if (result.rows.length === 0)
       return res.status(404).json({ message: "Entidad not found" });
- 
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getClient = async (req, res, next) => {
+  try {
+    const { id_entidad } = req.params;
+    // const result = await pool.query("SELECT * FROM avaluo_schema.cliente WHERE id_entidad = $1", [id_entidad]);
+    const result = await pool.query("SELECT * FROM cliente WHERE id_entidad = $1", [id_entidad]);
+
+    if (result.rows.length === 0)
+      return res.status(404).json({ message: "Cliente not found" });
+
     res.json(result.rows[0]);
   } catch (error) {
     next(error);
@@ -176,4 +212,6 @@ module.exports = {
   createClient,
   createEntity,
   getEntity,
+  getClient,
+  updateClient
 };

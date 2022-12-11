@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
 import { ComboBox } from 'react-widgets/Combobox';
 import Select from 'react-select';
-
 
 const TaskForm = () => {
 
@@ -106,7 +106,6 @@ const TaskForm = () => {
         const data2 = await response2.json();
         console.log(data2);
 
-        // comentar esto en caso de daño
         setEntity(data2);
         client.id_entidad = data2.id_entidad;
         setClient(client);
