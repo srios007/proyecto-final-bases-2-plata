@@ -4,7 +4,7 @@
 * Juan Sebastián González Forero - 20181020029
 * Santiago Ríos Valero - 20181020017
 
-En este proyecto se creo una página web en la cual se puede administar algunos aspectos del manejo de avalúos que la empresa Skhape solicitó su desarrollo. Para el desarrollo, se utilizaron las siguientes herramientas
+En este proyecto se creo una página web en la cual se puede administar algunos aspectos del manejo de avalúos que la empresa Skhape solicitó su desarrollo. Para el desarrollo, se utilizaron las siguientes herramientas:
 
 * Postgres
 * Express
