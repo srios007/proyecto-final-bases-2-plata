@@ -17,8 +17,8 @@ const pool = require("../db");
 
 const getAllTasks = async (req, res, next) => {
   try {
-    // const allTasks = await pool.query("SELECT * FROM avaluo_schema.task");
-    const allTasks = await pool.query("SELECT * FROM task");
+    const allTasks = await pool.query("SELECT * FROM avaluo_schema.task");
+    // const allTasks = await pool.query("SELECT * FROM task");
     res.json(allTasks.rows);
   } catch (error) {
     next(error);
@@ -27,8 +27,8 @@ const getAllTasks = async (req, res, next) => {
 
 const getAllClients = async(req,res,next) =>{
   try {
-    // const allClients = await pool.query("SELECT * FROM avaluo_schema.persona")
-    const allClients = await pool.query("SELECT * FROM persona")
+    const allClients = await pool.query("SELECT * FROM avaluo_schema.persona")
+    // const allClients = await pool.query("SELECT * FROM persona")
     res.json(allClients.rows)
   } catch (error) {
     next(error)
@@ -86,8 +86,8 @@ const createTask = async (req, res, next) => {
 
     const newTask = await pool.query(
       
-      // "INSERT INTO avaluo_schema.task (title, description) VALUES($1, $2) RETURNING *",
-      "INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
+      "INSERT INTO avaluo_schema.task (title, description) VALUES($1, $2) RETURNING *",
+      //"INSERT INTO task (title, description) VALUES($1, $2) RETURNING *",
       [title, description]
     );
 
@@ -104,8 +104,8 @@ const createClient = async (req, res, next) => {
     const { identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad } = req.body;
 
     const newEntity = await pool.query(
-      // "INSERT INTO avaluo_schema.entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
-      "INSERT INTO entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
+       "INSERT INTO avaluo_schema.entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
+      //"INSERT INTO entidad (identificacion_entidad,tipo_identificacion, telefono_entidad, correo_entidad) VALUES ($1, $2, $3, $4) RETURNING *",
       [ identificacion_entidad, tipo_identificacion, telefono_entidad, correo_entidad]
     );
     // console.log(res.json(newEntity.rows[0]));
@@ -144,9 +144,9 @@ const getTask = async (req, res, next) => {
 
 const getEntity = async (req, res,next) => {
   try {
-    const { id_entidad } = req.params;
- 
-    const result = await pool.query("SELECT * FROM entidad WHERE id_entidad = $1", [id_entidad]);
+    const { correo_entidad } = req.params;
+    const result = await pool.query("SELECT * FROM avaluo_schema.entidad WHERE correo_entidad = $1", [correo_entidad]);
+    // const result = await pool.query("SELECT * FROM entidad WHERE id_entidad = $1", [id_entidad]);
 
     if (result.rows.length === 0)
       return res.status(404).json({ message: "Entidad not found" });

@@ -72,7 +72,8 @@ const TaskForm = () => {
 
 
   const handleSubmitClient = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
+    console.log("first");
     setLoading(true);
     try {
       if (editing) {
@@ -88,16 +89,17 @@ const TaskForm = () => {
           body: JSON.stringify(client),
         });
         await response.json();
-
+        
         const response2 = await fetch("http://localhost:4000/entity/"+client.correo_entidad);
         const data2 = await response2.json();
         console.log(data2);
+        
         // comentar esto en caso de daño
         setClient(data2);
       }
 
       setLoading(false);
-      navigate("/clients");
+      // navigate("/clients");
     } catch (error) {
       console.error(error);
       

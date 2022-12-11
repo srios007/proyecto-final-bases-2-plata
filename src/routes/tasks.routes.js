@@ -34,6 +34,6 @@ router.post("/createClient", createClient);
 
 router.get("/clients", getAllClients);
 
-router.get("/entity/:id_entidad", getEntity);
+router.get("/entity/:correo_entidad", getEntity);
 
 module.exports = router;
