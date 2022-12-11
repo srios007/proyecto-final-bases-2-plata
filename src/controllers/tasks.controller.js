@@ -191,7 +191,7 @@ const getClient = async (req, res, next) => {
   try {
     const { id_entidad } = req.params;
     // const result = await pool.query("SELECT * FROM avaluo_schema.EMPRESA WHERE id_entidad = $1", [id_entidad]);
-    const result = await pool.query("SELECT * FROM EMPRESA WHERE id_entidad = $1", [id_entidad]);
+    const result = await pool.query("SELECT * FROM empresa WHERE id_entidad = $1", [id_entidad]);
 
     if (result.rows.length === 0)
       return res.status(404).json({ message: "Empresa not found" });
