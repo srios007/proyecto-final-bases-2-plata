@@ -16,7 +16,7 @@ En este proyecto se creo una página web en la cual se puede administar algunos 
 Primero, se clona el siguiente repositorio
 
 ```bash
-git cne https://github.com/srios007/proyecto-final-bases-2-plata.git
+git clone https://github.com/srios007/proyecto-final-bases-2-plata.git
 ```
 
 Segundo, descargar los paquetes: 
