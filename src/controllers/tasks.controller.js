@@ -18,7 +18,7 @@ const pool = require("../db");
 const getAllTasks = async (req, res, next) => {
   try {
     // const allTasks = await pool.query("SELECT * FROM avaluo_schema.task");
-    const allTasks = await pool.query("SELECT * FROM task");
+    const allTasks = await pool.query("SELECT * FROM avaluo");
     res.json(allTasks.rows);
   } catch (error) {
     next(error);
@@ -68,13 +68,13 @@ const updateTask = async (req, res) => {
   }
 };
 
-const updateClient = async (req, res) => {
+const updateClient = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { id_entidad, camara_comercio, nombre_empresa, razon_social } = req.body;
 
     const result = await pool.query(
-      "UPDATE client SET id_entidad = $1, camara_comercio = $2, nombre_empresa = $3, razon_social = $4 WHERE id = $5 RETURNING *",
+      "UPDATE EMPRESA SET id_entidad = $1, camara_comercio = $2, nombre_empresa = $3, razon_social = $4 WHERE id_entidad = $5 RETURNING *",
       [id_entidad, camara_comercio, nombre_empresa, razon_social, id]
     );
   
@@ -190,11 +190,11 @@ const getEntity = async (req, res, next) => {
 const getClient = async (req, res, next) => {
   try {
     const { id_entidad } = req.params;
-    // const result = await pool.query("SELECT * FROM avaluo_schema.cliente WHERE id_entidad = $1", [id_entidad]);
-    const result = await pool.query("SELECT * FROM cliente WHERE id_entidad = $1", [id_entidad]);
+    // const result = await pool.query("SELECT * FROM avaluo_schema.EMPRESA WHERE id_entidad = $1", [id_entidad]);
+    const result = await pool.query("SELECT * FROM EMPRESA WHERE id_entidad = $1", [id_entidad]);
 
     if (result.rows.length === 0)
-      return res.status(404).json({ message: "Cliente not found" });
+      return res.status(404).json({ message: "Empresa not found" });
 
     res.json(result.rows[0]);
   } catch (error) {
