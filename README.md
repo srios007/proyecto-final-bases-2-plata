@@ -31,7 +31,7 @@ Tercero, correr el backnd:
 ```
 npm run dev
 ```
-Cuarto, correr el front
+Cuarto, correr el front:
 
 ```
 cd client
