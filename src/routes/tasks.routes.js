@@ -9,6 +9,8 @@ const {
   createClient,
   getEntity,
   createEntity,
+  getClient,
+  updateClient,
 
 } = require("../controllers/tasks.controller");
 const router = Router();
@@ -39,5 +41,10 @@ router.post("/createClient", createClient);
 router.get("/clients", getAllClients);
 
 router.get("/entity/:correo_entidad", getEntity);
+
+router.get("/client/:id", getClient);
+
+router.put("/client/:id", updateClient);
+
 
 module.exports = router;
