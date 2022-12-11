@@ -56,7 +56,7 @@ const Clients = () => {
                                 <Button
                                     variant="contained"
                                     color="inherit"
-                                    onClick={() => navigate(`/clients/${clients.id}/edit`)}
+                                    onClick={() => navigate(`/clients/${clients.id_entidad}/edit`)}
                                 >
                                     Editar
                                 </Button>
