@@ -13,7 +13,7 @@ En este proyecto se creo una página web en la cual se puede administar algunos 
 
 ### Instalacióm
 
-Primero, se clona el siguiente repositorio
+Primero, se clona el siguiente repositorio:
 
 ```bash
 git clone https://github.com/srios007/proyecto-final-bases-2-plata.git
@@ -26,7 +26,7 @@ npm install
 cd client
 npm install
 ```
-Tercero, correr el backnd:
+Tercero, correr el backend:
 
 ```
 npm run dev
