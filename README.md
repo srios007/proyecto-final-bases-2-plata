@@ -25,7 +25,6 @@ Segundo, descargar los paquetes:
 npm install
 cd client
 npm install
-
 ```
 Tercero, correr el backnd:
 
